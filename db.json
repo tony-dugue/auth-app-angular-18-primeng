@@ -5,6 +5,18 @@
       "email": "john.doe@test.com",
       "password": "123456",
       "id": 1
+    },
+    {
+      "fullName": "john doe",
+      "email": "john.doe@test.com",
+      "password": "123456",
+      "id": 2
+    },
+    {
+      "fullName": "john doe",
+      "email": "john.doe@test.com",
+      "password": "123456",
+      "id": 3
     }
   ]
 }

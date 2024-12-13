@@ -5,7 +5,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
@@ -13,6 +13,7 @@ import { PasswordModule } from 'primeng/password';
 import { passwordMismatchValidator } from '../../shared/password-mismatch.directive';
 import { AuthService } from '../../services/auth.service';
 import { RegisterPostData } from '../../interfaces/auth';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-register',
@@ -30,6 +31,8 @@ import { RegisterPostData } from '../../interfaces/auth';
 })
 export class RegisterComponent {
   private registerService = inject(AuthService);
+  private messageService = inject(MessageService);
+  private router = inject(Router);
 
   registerForm = new FormGroup(
     {
@@ -52,10 +55,21 @@ export class RegisterComponent {
 
     this.registerService.registerUser(postData as RegisterPostData).subscribe({
       next: (response) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Registered successfully',
+        });
+        this.router.navigate(['login']);
         console.log(response);
       },
       error: (err) => {
         console.log(err);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Something went wrong',
+        });
       },
     });
   }
